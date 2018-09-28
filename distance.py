@@ -1,7 +1,21 @@
 import unittest
 
 
-def find_shorttest_distance(doc, a, b):
+def find_shorttest_distance(doc: str, a: str, b: str) -> int:
+    """
+    Return number of words in the document `doc` that occur between the words
+    `a` and `b`.
+
+    All punctionation is ignored and case is insensitive.
+    Order of occurences does not matter. I.e. a word2 occuring before word1
+    will also result in a positive distance and not a negative one.
+
+    @param doc: A document to search in
+    @param a: First keyword
+    @param b: Second keyword
+
+    @return Number of words or None if no match is found or a and b are equal
+    """
     # Keep only alphanumeric and whitespace characters, removes punctuation
     doc_alnum = ''.join(c.lower() for c in doc if c.isalnum() or c.isspace())
 
