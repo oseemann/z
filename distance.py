@@ -3,7 +3,7 @@ import unittest
 
 def find_shorttest_distance(doc, a, b):
     # Keep only alphanumeric and whitespace characters, removes punctuation
-    doc_alnum = ''.join(c for c in doc if c.isalnum() or c.isspace())
+    doc_alnum = ''.join(c.lower() for c in doc if c.isalnum() or c.isspace())
 
     # Split doc into list of words
     words = doc_alnum.split()
@@ -11,12 +11,14 @@ def find_shorttest_distance(doc, a, b):
     # Lists to store positions of search arguments a and b
     pos_a = []
     pos_b = []
+    low_a = a.lower()
+    low_b = b.lower()
 
     # Find where both words appear in the doc
     for i in range(len(words)):
-        if words[i] == a:
+        if words[i] == low_a:
             pos_a.append(i)
-        elif words[i] == b:
+        elif words[i] == low_b:
             pos_b.append(i)
 
     # Find shortest distance of word positions
@@ -46,6 +48,10 @@ class Test(unittest.TestCase):
         self.t('a b c d', 'c', 'a', 1)
         self.t('a b c d', 'b', 'a', 0)
         self.t('a b c d', 'c', 'b', 0)
+
+    def test_case(self):
+        self.t('A B c D', 'a', 'd', 2)
+        self.t('A B c D', 'C', 'a', 1)
 
 
 if __name__ == '__main__':
