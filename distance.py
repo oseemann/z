@@ -1,3 +1,4 @@
+import sys
 import unittest
 
 
@@ -92,5 +93,29 @@ class Test(unittest.TestCase):
         self.t(d, 'S', 'F', 25)
 
 
+def run(args):
+    try:
+        doc = open(args[1]).read()
+        a = args[2]
+        b = args[3]
+    except IndexError as e:
+        print("Usage: distance.py file word1 word2")
+        print("Example: distance.py test.txt Roads I")
+        return
+    except IOError as e:
+        print('File `{}` cannot be opened'.format(args[1]))
+        return
+
+    dist = find_shorttest_distance(doc, a, b)
+    if dist is None:
+        msg = 'Not found. Either `{a}` or `{b}` have not been found in the doc'
+    else:
+        msg = 'Distance between `{a}` and `{b}` is {dist} words'
+    print(msg.format(**locals()))
+
+
 if __name__ == '__main__':
-    unittest.main(verbosity=2)
+    if len(sys.argv) > 1:
+        run(sys.argv)
+    else:
+        unittest.main(verbosity=2)
