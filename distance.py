@@ -29,7 +29,7 @@ def find_shorttest_distance(doc: str, a: str, b: str, slow: bool = False) -> int
         return find_linear(words, a.lower(), b.lower())
 
 
-def find_quadratic(words: str, a: str, b: str):
+def find_quadratic(words: str, w1: str, w2: str):
     """
     Sub-optimal implementation of the distance search.
 
@@ -43,20 +43,20 @@ def find_quadratic(words: str, a: str, b: str):
     number of total words).
     """
     # Lists to store positions of search words a and b
-    pos_a = []
-    pos_b = []
+    pos_w1 = []
+    pos_w2 = []
 
     # Find where both words appear in the doc
     for i in range(len(words)):
-        if words[i] == a:
-            pos_a.append(i)
-        elif words[i] == b:
-            pos_b.append(i)
+        if words[i] == w1:
+            pos_w1.append(i)
+        elif words[i] == w2:
+            pos_w2.append(i)
 
     # Calculate distances for all found combinations of positions
     # For search words with very high frequency in the document this will be
     # slow, as the product of all position pairs is generated.
-    distances = [abs(pa - pb) - 1 for pa in pos_a for pb in pos_b]
+    distances = [abs(pos1 - pos2) - 1 for pos1 in pos_w1 for pos2 in pos_w2]
 
     # Return minimum distance
     return min(distances) if distances else None
@@ -153,8 +153,8 @@ class Test(unittest.TestCase):
 def run(args):
     try:
         doc = open(args[1]).read()
-        a = args[2]
-        b = args[3]
+        w1 = args[2]
+        w2 = args[3]
     except IndexError as e:
         print("Usage: distance.py file word1 word2")
         print("Example: distance.py test.txt Roads I")
@@ -163,11 +163,11 @@ def run(args):
         print('File `{}` cannot be opened'.format(args[1]))
         return
 
-    dist = find_shorttest_distance(doc, a, b)
+    dist = find_shorttest_distance(doc, w1, w2)
     if dist is None:
-        msg = 'Not found. Either `{a}` or `{b}` have not been found in the doc'
+        msg = '404: Either `{w1}` or `{w2}` have not been found in the doc'
     else:
-        msg = 'Distance between `{a}` and `{b}` is {dist} words'
+        msg = 'Distance between `{w1}` and `{w2}` is {dist} words'
     print(msg.format(**locals()))
 
 
