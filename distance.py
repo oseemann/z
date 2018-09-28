@@ -36,9 +36,10 @@ def find_shorttest_distance(doc: str, a: str, b: str) -> int:
         elif words[i] == low_b:
             pos_b.append(i)
 
-    # Find shortest distance of word positions
+    # Calculate distances for all found combinations of positions
     distances = [abs(pb - pa) - 1 for pa in pos_a for pb in pos_b]
 
+    # Return minimum distance
     return min(distances) if distances else None
 
 
