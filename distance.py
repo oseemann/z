@@ -53,6 +53,30 @@ class Test(unittest.TestCase):
         self.t('A B c D', 'a', 'd', 2)
         self.t('A B c D', 'C', 'a', 1)
 
+    def test_zageno_example(self):
+        d = 'We do value and reward motivation in our development team. '\
+            'Development is a key skill for a DevOp.'
+        self.t(d, 'motivation', 'development', 2)
+        self.t(d, 'We', 'do', 0)
+        self.t(d, 'we', 'DO', 0)
+        self.t(d, 'DevOp', 'we', 16)
+        self.t(d, 'value', 'skill', 11)
+        self.t(d, 'team', 'DEVELOPMENT', 0)
+
+    def test_many_duplicate_words(self):
+        d = 'A B G A A B G F B B E G A C C F B G D F B'
+        self.t(d, 'A', 'B', 0)
+        self.t(d, 'A', 'C', 0)
+        self.t(d, 'A', 'D', 5)
+        self.t(d, 'A', 'E', 1)
+        self.t(d, 'A', 'F', 2)
+        self.t(d, 'A', 'G', 0)
+
+        d = 'D J J F P H D B D Q R M Q M O N O J O K P L K D L Q E Q C S'
+        self.t(d, 'D', 'O', 4)
+        self.t(d, 'K', 'Q', 2)
+        self.t(d, 'S', 'F', 25)
+
 
 if __name__ == '__main__':
-    unittest.main()
+    unittest.main(verbosity=2)
