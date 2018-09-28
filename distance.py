@@ -1,5 +1,6 @@
 import sys
 import unittest
+from typing import List
 
 
 def find_shorttest_distance(doc: str, a: str, b: str, slow: bool=False) -> int:
@@ -29,7 +30,7 @@ def find_shorttest_distance(doc: str, a: str, b: str, slow: bool=False) -> int:
         return find_linear(words, a.lower(), b.lower())
 
 
-def find_quadratic(words: str, w1: str, w2: str):
+def find_quadratic(words: List[str], w1: str, w2: str):
     """
     Sub-optimal implementation of the distance search.
 
@@ -62,7 +63,7 @@ def find_quadratic(words: str, w1: str, w2: str):
     return min(distances) if distances else None
 
 
-def find_linear(words: str, w1: str, w2: str):
+def find_linear(words: List[str], w1: str, w2: str):
     """
     An implementation with linear complexity that iterates over all words only
     once.
