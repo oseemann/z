@@ -3,20 +3,22 @@ import unittest
 from typing import List
 
 
-def find_shorttest_distance(doc: str, a: str, b: str, slow: bool=False) -> int:
+def find_shorttest_distance(
+        doc: str, word1: str, word2: str, slow: bool=False) -> int:
     """
     Return number of words in the document `doc` that occur between the words
-    `a` and `b`.
+    `word1` and `word2`.
 
     All punctionation is ignored and case is insensitive.
     Order of occurences does not matter. I.e. a word2 occuring before word1
     will also result in a positive distance and not a negative one.
 
     @param doc: A document to search in
-    @param a: First keyword
-    @param b: Second keyword
+    @param word1: First keyword
+    @param word2: Second keyword
 
-    @return Number of words or None if no match is found or a and b are equal
+    @return Number of words or None if no match is found or word1 and word2 are
+            equal
     """
     # Keep only alphanumeric and whitespace characters, removes punctuation
     doc_alnum = ''.join(c.lower() for c in doc if c.isalnum() or c.isspace())
@@ -25,9 +27,9 @@ def find_shorttest_distance(doc: str, a: str, b: str, slow: bool=False) -> int:
     words = doc_alnum.split()
 
     if slow:
-        return find_quadratic(words, a.lower(), b.lower())
+        return find_quadratic(words, word1.lower(), word2.lower())
     else:
-        return find_linear(words, a.lower(), b.lower())
+        return find_linear(words, word1.lower(), word2.lower())
 
 
 def find_quadratic(words: List[str], w1: str, w2: str):
