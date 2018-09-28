@@ -2,7 +2,7 @@ import sys
 import unittest
 
 
-def find_shorttest_distance(doc: str, a: str, b: str, slow: bool = False) -> int:
+def find_shorttest_distance(doc: str, a: str, b: str, slow: bool=False) -> int:
     """
     Return number of words in the document `doc` that occur between the words
     `a` and `b`.
